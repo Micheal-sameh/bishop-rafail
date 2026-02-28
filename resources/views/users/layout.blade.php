@@ -335,6 +335,8 @@
                     <a class="{{ request()->routeIs('documents.historical.*') ? 'active' : '' }}" href="{{ route('documents.historical.index') }}">كتب تاريخية</a>
                     <a class="{{ request()->routeIs('documents.produced.*') ? 'active' : '' }}" href="{{ route('documents.produced.index') }}">كتب اصدارات المركز</a>
                     <a class="{{ request()->routeIs('documents.artical.*') ? 'active' : '' }}" href="{{ route('documents.artical.index') }}">كتب مقالات</a>
+                    <a class="{{ request()->routeIs('films.*') ? 'active' : '' }}" href="{{ route('films.index') }}">الأفلام</a>
+                    <a class="{{ request()->routeIs('gallery.*') ? 'active' : '' }}" href="{{ route('gallery.index') }}">المعرض</a>
                 </div>
 
                 <h3>عام</h3>

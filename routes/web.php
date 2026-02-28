@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\FilmController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SermonController;
 use App\Http\Controllers\SermonPlaylistController;
 use App\Http\Controllers\UserController;
@@ -98,5 +100,25 @@ Route::middleware('auth')->group(function (): void {
         Route::put('/{document}', [DocumentController::class, 'update'])->name('update');
         Route::get('/{document}/delete', [DocumentController::class, 'delete'])->name('delete');
         Route::delete('/{document}', [DocumentController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('films')->name('films.')->group(function (): void {
+        Route::get('/', [FilmController::class, 'index'])->name('index');
+        Route::get('/create', [FilmController::class, 'create'])->name('create');
+        Route::post('/', [FilmController::class, 'store'])->name('store');
+        Route::get('/{film}', [FilmController::class, 'show'])->name('show');
+        Route::get('/{film}/edit', [FilmController::class, 'edit'])->name('edit');
+        Route::put('/{film}', [FilmController::class, 'update'])->name('update');
+        Route::get('/{film}/delete', [FilmController::class, 'delete'])->name('delete');
+        Route::delete('/{film}', [FilmController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('gallery')->name('gallery.')->group(function (): void {
+        Route::get('/', [GalleryController::class, 'index'])->name('index');
+        Route::get('/create', [GalleryController::class, 'create'])->name('create');
+        Route::post('/', [GalleryController::class, 'store'])->name('store');
+        Route::get('/{gallery}', [GalleryController::class, 'show'])->name('show');
+        Route::get('/{gallery}/delete', [GalleryController::class, 'delete'])->name('delete');
+        Route::delete('/{gallery}', [GalleryController::class, 'destroy'])->name('destroy');
     });
 });
