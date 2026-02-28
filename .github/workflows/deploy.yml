@@ -1,11 +1,9 @@
 name: Deploy to Server
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types:
-      - closed
   workflow_dispatch:
 
 concurrency:
@@ -14,10 +12,23 @@ concurrency:
 
 jobs:
   deploy:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
 
     steps:
+      - name: Validate SSH secrets
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          set -e
+          for var in SSH_HOST SSH_USER SSH_PRIVATE_KEY; do
+            if [ -z "${!var}" ]; then
+              echo "Missing required secret: $var"
+              exit 1
+            fi
+          done
+
       - name: Deploy over SSH
         uses: appleboy/ssh-action@v1.2.0
         env:
@@ -26,6 +37,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: ${{ secrets.SSH_PORT || '22' }}
           script_stop: true
           envs: DEPLOY_PATH
