@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\Api\SermonPlaylistIndexRequest;
 use App\Http\Resources\SermonPlaylistResource;
 use App\Services\SermonPlaylistService;

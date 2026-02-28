@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\Api\DocumentIndexRequest;
 use App\Http\Resources\DocumentResource;
 use App\Services\DocumentService;

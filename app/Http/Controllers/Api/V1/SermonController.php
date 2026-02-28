@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\Api\SermonIndexRequest;
 use App\Http\Resources\SermonResource;
 use App\Services\SermonService;

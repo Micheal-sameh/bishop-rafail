@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\DocumentController;
-use App\Http\Controllers\Api\SermonController;
-use App\Http\Controllers\Api\SermonPlaylistController;
+use App\Http\Controllers\Api\V1\DocumentController;
+use App\Http\Controllers\Api\V1\SermonController;
+use App\Http\Controllers\Api\V1\SermonPlaylistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,5 +32,3 @@ Route::prefix('v1')->group(function (): void {
     Route::get('/sermons', [SermonController::class, 'index']);
     Route::get('/books', [DocumentController::class, 'index']);
 });
-// Route::get('/sermons-playlists', [SermonPlaylistController::class, 'index']);
-// Route::get('/sermons', [SermonController::class, 'index']);
