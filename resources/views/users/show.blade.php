@@ -31,6 +31,10 @@
 
     <div class="actions" style="margin-top: 14px;">
         <a class="btn-link btn-light" href="{{ route('users.edit', $user) }}">تحديث</a>
+        <form method="POST" action="{{ route('users.reset-password', $user) }}">
+            @csrf
+            <button class="btn-link" type="submit">إعادة تعيين كلمة المرور</button>
+        </form>
         <a class="btn-link" href="{{ route('users.delete', $user) }}">حذف</a>
         <a class="btn-link btn-light" href="{{ route('users.index') }}">رجوع</a>
     </div>

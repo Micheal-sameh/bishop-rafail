@@ -22,7 +22,6 @@ class UpdateUserRequest extends FormRequest
             'phone' => ['required', 'string', 'max:30', Rule::unique('users', 'phone')->ignore($userId)],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($userId)],
             'status' => ['required', 'integer', Rule::in(UserStatus::getValues())],
-            'password' => ['nullable', 'string', 'min:6', 'confirmed'],
         ];
     }
 
@@ -37,7 +36,6 @@ class UpdateUserRequest extends FormRequest
             'email.unique' => 'البريد الإلكتروني مستخدم من قبل.',
             'status.required' => 'الحالة مطلوبة.',
             'status.in' => 'قيمة الحالة غير صحيحة.',
-            'password.confirmed' => 'تأكيد كلمة المرور غير مطابق.',
         ];
     }
 }

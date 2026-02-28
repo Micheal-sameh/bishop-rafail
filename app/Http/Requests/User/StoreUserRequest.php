@@ -20,7 +20,6 @@ class StoreUserRequest extends FormRequest
             'phone' => ['required', 'string', 'max:30', 'unique:users,phone'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'status' => ['required', 'integer', Rule::in(UserStatus::getValues())],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
         ];
     }
 
@@ -35,8 +34,6 @@ class StoreUserRequest extends FormRequest
             'email.unique' => 'البريد الإلكتروني مستخدم من قبل.',
             'status.required' => 'الحالة مطلوبة.',
             'status.in' => 'قيمة الحالة غير صحيحة.',
-            'password.required' => 'كلمة المرور مطلوبة.',
-            'password.confirmed' => 'تأكيد كلمة المرور غير مطابق.',
         ];
     }
 }

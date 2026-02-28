@@ -35,10 +35,11 @@ class UserController extends Controller
     public function store(StoreUserRequest $request): RedirectResponse
     {
         $this->userService->createUser($request->validated());
+        $password = $this->userService->defaultPassword();
 
         return redirect()
             ->route('users.index')
-            ->with('status', 'تم إنشاء المستخدم بنجاح.');
+            ->with('status', 'تم إنشاء المستخدم بنجاح. كلمة المرور الافتراضية: '.$password);
     }
 
     public function show(User $user): View
@@ -79,5 +80,21 @@ class UserController extends Controller
         return redirect()
             ->route('users.index')
             ->with('status', 'تم حذف المستخدم بنجاح.');
+    }
+
+    public function profile(Request $request): View
+    {
+        return view('users.profile', [
+            'user' => $request->user(),
+        ]);
+    }
+
+    public function resetPassword(User $user): RedirectResponse
+    {
+        $password = $this->userService->resetPassword($user);
+
+        return redirect()
+            ->route('users.show', $user)
+            ->with('status', 'تم إعادة تعيين كلمة المرور بنجاح. كلمة المرور الافتراضية: '.$password);
     }
 }

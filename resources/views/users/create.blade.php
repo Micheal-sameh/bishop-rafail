@@ -34,15 +34,7 @@
             </select>
         </div>
 
-        <div class="field">
-            <label for="password">كلمة المرور</label>
-            <input id="password" type="password" name="password" required>
-        </div>
-
-        <div class="field">
-            <label for="password_confirmation">تأكيد كلمة المرور</label>
-            <input id="password_confirmation" type="password" name="password_confirmation" required>
-        </div>
+        <p class="meta">سيتم تعيين كلمة مرور افتراضية تلقائياً عند إنشاء المستخدم.</p>
 
         <button class="btn" type="submit">حفظ المستخدم</button>
     </form>

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\SermonController;
+use App\Http\Controllers\Api\SermonPlaylistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +25,10 @@ Route::get('/documetation', function () {
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix('v1')->group(function (): void {
+    Route::get('/sermons-playlists', [SermonPlaylistController::class, 'index']);
+    Route::get('/sermons', [SermonController::class, 'index']);
+});
+// Route::get('/sermons-playlists', [SermonPlaylistController::class, 'index']);
+// Route::get('/sermons', [SermonController::class, 'index']);

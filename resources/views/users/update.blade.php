@@ -34,16 +34,6 @@
             </select>
         </div>
 
-        <div class="field">
-            <label for="password">كلمة المرور الجديدة (اختياري)</label>
-            <input id="password" type="password" name="password">
-        </div>
-
-        <div class="field">
-            <label for="password_confirmation">تأكيد كلمة المرور الجديدة</label>
-            <input id="password_confirmation" type="password" name="password_confirmation">
-        </div>
-
         <div class="actions">
             <button class="btn" type="submit">حفظ التحديث</button>
             <a class="btn-link btn-light" href="{{ route('users.show', $user) }}">إلغاء</a>

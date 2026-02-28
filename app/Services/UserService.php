@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
+    private const DEFAULT_PASSWORD = '12345678';
+
     public function __construct(
         private readonly UserRepository $userRepository
     ) {}
@@ -26,20 +28,25 @@ class UserService
 
     public function createUser(array $data): User
     {
-        $data['password'] = Hash::make((string) $data['password']);
+        $data['password'] = Hash::make($this->defaultPassword());
 
         return $this->userRepository->create($data);
     }
 
     public function updateUser(User $user, array $data): User
     {
-        if (empty($data['password'])) {
-            unset($data['password']);
-        } else {
-            $data['password'] = Hash::make((string) $data['password']);
-        }
-
         return $this->userRepository->update($user, $data);
+    }
+
+    public function resetPassword(User $user): string
+    {
+        $password = $this->defaultPassword();
+
+        $this->userRepository->update($user, [
+            'password' => Hash::make($password),
+        ]);
+
+        return $password;
     }
 
     public function deleteUser(User $user): bool
@@ -50,5 +57,10 @@ class UserService
     public function statusOptions(): array
     {
         return UserStatus::all();
+    }
+
+    public function defaultPassword(): string
+    {
+        return (string) config('app.default_user_password', self::DEFAULT_PASSWORD);
     }
 }

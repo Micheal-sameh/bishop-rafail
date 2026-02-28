@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'إدارة المستخدمين - مركز البابا شنوده')</title>
+    <title>@yield('title', 'لوحة الإدارة - مركز البابا شنوده')</title>
     <style>
         :root {
             --ink: #30251d;
@@ -37,6 +37,57 @@
             border: 1px solid var(--paper-edge);
             border-radius: 14px;
             box-shadow: 0 12px 28px rgba(66, 44, 26, 0.2);
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .page {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 640px;
+        }
+
+        .sidebar {
+            background: #efe3cc;
+            border-left: 1px solid #dccaaa;
+            padding: 18px;
+        }
+
+        .brand {
+            margin: 0 0 16px;
+            font-size: 1.1rem;
+            color: var(--accent-strong);
+        }
+
+        .sidebar h3 {
+            margin: 16px 0 8px;
+            font-size: 0.96rem;
+            color: var(--soft-ink);
+        }
+
+        .menu {
+            display: grid;
+            gap: 8px;
+        }
+
+        .menu a {
+            display: block;
+            padding: 9px 10px;
+            border-radius: 8px;
+            border: 1px solid #d9c4a1;
+            background: #fff6e8;
+            color: var(--ink);
+            text-decoration: none;
+            font-size: 0.93rem;
+        }
+
+        .menu a.active {
+            background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .content {
             padding: 24px;
         }
 
@@ -49,12 +100,6 @@
         }
 
         .title { margin: 0; font-size: 1.7rem; }
-
-        .nav {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
 
         .btn, .btn-link {
             display: inline-block;
@@ -124,28 +169,81 @@
 
         .pagination { margin-top: 14px; }
         .pagination nav { direction: ltr; }
+
+        @media (max-width: 980px) {
+            body {
+                padding: 12px;
+            }
+
+            .page {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .sidebar {
+                border-left: 0;
+                border-bottom: 1px solid #dccaaa;
+            }
+
+            .content {
+                padding: 16px;
+            }
+
+            .top {
+                margin-bottom: 12px;
+            }
+
+            .title {
+                font-size: 1.3rem;
+            }
+
+            th, td {
+                padding: 8px;
+                font-size: 0.92rem;
+            }
+        }
     </style>
 </head>
 <body>
     <main class="container">
-        <header class="top">
-            <h1 class="title">@yield('page_title', 'إدارة المستخدمين')</h1>
-            <nav class="nav">
-                <a class="btn-link btn-light" href="{{ route('dashboard') }}">لوحة التحكم</a>
-                <a class="btn-link" href="{{ route('users.index') }}">قائمة المستخدمين</a>
-                <a class="btn-link" href="{{ route('users.create') }}">إضافة مستخدم</a>
-            </nav>
-        </header>
+        <div class="page">
+            <aside class="sidebar">
+                <h2 class="brand">مركز البابا شنوده</h2>
 
-        @if (session('status'))
-            <div class="alert alert-ok">{{ session('status') }}</div>
-        @endif
+                <h3>الأقسام</h3>
+                <div class="menu">
+                    <a class="{{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">المستخدمون</a>
+                    <a class="{{ request()->routeIs('sermons-playlists.*') ? 'active' : '' }}" href="{{ route('sermons-playlists.index') }}">قوائم العظات</a>
+                    <a class="{{ request()->routeIs('sermons.*') ? 'active' : '' }}" href="{{ route('sermons.index') }}">العظات</a>
+                </div>
 
-        @if ($errors->any())
-            <div class="alert alert-error">{{ $errors->first() }}</div>
-        @endif
+                <h3>عام</h3>
+                <div class="menu">
+                    <a href="{{ route('dashboard') }}">لوحة التحكم</a>
+                    <a class="{{ request()->routeIs('profile') ? 'active' : '' }}" href="{{ route('profile') }}">الملف الشخصي</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="btn" style="width:100%;margin-top:0;" type="submit">تسجيل الخروج</button>
+                    </form>
+                </div>
+            </aside>
 
-        @yield('content')
+            <section class="content">
+                <header class="top">
+                    <h1 class="title">@yield('page_title', 'لوحة الإدارة')</h1>
+                </header>
+
+                @if (session('status'))
+                    <div class="alert alert-ok">{{ session('status') }}</div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-error">{{ $errors->first() }}</div>
+                @endif
+
+                @yield('content')
+            </section>
+        </div>
     </main>
 </body>
 </html>

@@ -4,6 +4,10 @@
 @section('page_title', 'قائمة المستخدمين')
 
 @section('content')
+    <div class="actions" style="margin-bottom: 12px;">
+        <a class="btn-link" href="{{ route('users.create') }}">إضافة مستخدم جديد</a>
+    </div>
+
     <div class="table-wrap">
         <table>
             <thead>
