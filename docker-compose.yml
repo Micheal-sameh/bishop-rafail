@@ -9,6 +9,8 @@ services:
     container_name: bishop
     restart: unless-stopped
     working_dir: /var/www/bishop
+    ports:
+      - 1800:9000
     volumes:
       - ./:/var/www/bishop
       - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
@@ -18,22 +20,22 @@ services:
     depends_on:
       - db
 
-  nginx:
-    container_name: reservation-test-nginx
-    restart: unless-stopped
-    image: nginx
-    ports:
-      - 1600:80
-    depends_on:
-      - app
-    volumes:
-      - ./:/var/www/bishop
-      - ./docker/nginx/conf.d/:/etc/nginx/conf.d
-    networks:
-      - bishop
+  # nginx:
+  #   container_name: reservation-test-nginx
+  #   restart: unless-stopped
+  #   image: nginx
+  #   ports:
+  #     - 1800:80
+  #   depends_on:
+  #     - app
+  #   volumes:
+  #     - ./:/var/www/bishop
+  #     - ./docker/nginx/conf.d/:/etc/nginx/conf.d
+  #   networks:
+  #     - bishop
   db:
     image: mariadb:10.5
-    container_name: reservation-test-db
+    container_name: bishop-test-db
     restart: unless-stopped
     command: --max_allowed_packet=67108864
     environment:
@@ -44,7 +46,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     ports:
-      - "1601:3306"
+      - "1801:3306"
     networks:
       - bishop
       - external_db_network
@@ -59,7 +61,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       UPLOAD_LIMIT: 256M
     ports:
-      - "1602:80"
+      - "1802:80"
     networks:
       - bishop
 
