@@ -4,8 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\LectureController;
 use App\Http\Controllers\SermonController;
 use App\Http\Controllers\SermonPlaylistController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -120,5 +122,27 @@ Route::middleware('auth')->group(function (): void {
         Route::get('/{gallery}', [GalleryController::class, 'show'])->name('show');
         Route::get('/{gallery}/delete', [GalleryController::class, 'delete'])->name('delete');
         Route::delete('/{gallery}', [GalleryController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('subjects')->name('subjects.')->group(function (): void {
+        Route::get('/', [SubjectController::class, 'index'])->name('index');
+        Route::get('/create', [SubjectController::class, 'create'])->name('create');
+        Route::post('/', [SubjectController::class, 'store'])->name('store');
+        Route::get('/{subject}', [SubjectController::class, 'show'])->name('show');
+        Route::get('/{subject}/edit', [SubjectController::class, 'edit'])->name('edit');
+        Route::put('/{subject}', [SubjectController::class, 'update'])->name('update');
+        Route::get('/{subject}/delete', [SubjectController::class, 'delete'])->name('delete');
+        Route::delete('/{subject}', [SubjectController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('lectures')->name('lectures.')->group(function (): void {
+        Route::get('/', [LectureController::class, 'index'])->name('index');
+        Route::get('/create', [LectureController::class, 'create'])->name('create');
+        Route::post('/', [LectureController::class, 'store'])->name('store');
+        Route::get('/{lecture}', [LectureController::class, 'show'])->name('show');
+        Route::get('/{lecture}/edit', [LectureController::class, 'edit'])->name('edit');
+        Route::put('/{lecture}', [LectureController::class, 'update'])->name('update');
+        Route::get('/{lecture}/delete', [LectureController::class, 'delete'])->name('delete');
+        Route::delete('/{lecture}', [LectureController::class, 'destroy'])->name('destroy');
     });
 });
