@@ -3,8 +3,10 @@
 use App\Http\Controllers\Api\V1\DocumentController;
 use App\Http\Controllers\Api\V1\FilmController;
 use App\Http\Controllers\Api\V1\GalleryController;
+use App\Http\Controllers\Api\V1\LectureController;
 use App\Http\Controllers\Api\V1\SermonController;
 use App\Http\Controllers\Api\V1\SermonPlaylistController;
+use App\Http\Controllers\Api\V1\SubjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +37,6 @@ Route::prefix('v1')->group(function (): void {
     Route::get('/books', [DocumentController::class, 'index']);
     Route::get('/films', [FilmController::class, 'index']);
     Route::get('/gallery', [GalleryController::class, 'index']);
+    Route::get('/subjects', [SubjectController::class, 'index']);
+    Route::get('/lectures', [LectureController::class, 'index']);
 });

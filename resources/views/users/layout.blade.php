@@ -337,6 +337,8 @@
                     <a class="{{ request()->routeIs('documents.artical.*') ? 'active' : '' }}" href="{{ route('documents.artical.index') }}">كتب مقالات</a>
                     <a class="{{ request()->routeIs('films.*') ? 'active' : '' }}" href="{{ route('films.index') }}">الأفلام</a>
                     <a class="{{ request()->routeIs('gallery.*') ? 'active' : '' }}" href="{{ route('gallery.index') }}">المعرض</a>
+                    <a class="{{ request()->routeIs('subjects.*') ? 'active' : '' }}" href="{{ route('subjects.index') }}">المواد</a>
+                    <a class="{{ request()->routeIs('lectures.*') ? 'active' : '' }}" href="{{ route('lectures.index') }}">المحاضرات</a>
                 </div>
 
                 <h3>عام</h3>
