@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\SermonsTypes;
 use App\Models\Sermon;
 use App\Models\SermonPlaylist;
 use App\Repositories\SermonRepository;
@@ -17,6 +18,11 @@ class SermonService
     public function paginate(int $perPage = 15): LengthAwarePaginator
     {
         return $this->repository->paginate($perPage);
+    }
+
+    public function paginateByType(int $type, int $perPage = 15): LengthAwarePaginator
+    {
+        return $this->repository->paginateByPlaylistType($type, $perPage);
     }
 
     public function allByPlaylistId(int $playlistId): Collection
@@ -76,5 +82,26 @@ class SermonService
     public function playlistOptions(): Collection
     {
         return SermonPlaylist::query()->latest('id')->get(['id', 'title']);
+    }
+
+    public function playlistOptionsByType(int $type): Collection
+    {
+        return SermonPlaylist::query()
+            ->where('type', $type)
+            ->latest('id')
+            ->get(['id', 'title']);
+    }
+
+    public function isPlaylistInType(int $playlistId, int $type): bool
+    {
+        return SermonPlaylist::query()
+            ->where('id', $playlistId)
+            ->where('type', $type)
+            ->exists();
+    }
+
+    public function typeFromSlug(string $type): int
+    {
+        return $type === 'trips' ? SermonsTypes::TRIPS : SermonsTypes::HISTORICAL;
     }
 }

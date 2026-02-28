@@ -18,29 +18,87 @@ class SermonController extends Controller
 
     public function index(Request $request): View
     {
-        $perPage = max(1, min(100, (int) $request->integer('per_page', 15)));
+        return $this->indexByType($request, 'historical');
+    }
 
-        return view('sermons.index', [
-            'sermons' => $this->service->paginate($perPage),
-        ]);
+    public function indexHistorical(Request $request): View
+    {
+        return $this->indexByType($request, 'historical');
+    }
+
+    public function indexTrips(Request $request): View
+    {
+        return $this->indexByType($request, 'trips');
     }
 
     public function create(): View
     {
-        return view('sermons.create', [
-            'playlists' => $this->service->playlistOptions(),
-        ]);
+        return $this->createByType('historical');
+    }
+
+    public function createHistorical(): View
+    {
+        return $this->createByType('historical');
+    }
+
+    public function createTrips(): View
+    {
+        return $this->createByType('trips');
+    }
+
+    public function storeHistorical(StoreSermonRequest $request): RedirectResponse
+    {
+        return $this->storeByType($request, 'historical');
+    }
+
+    public function storeTrips(StoreSermonRequest $request): RedirectResponse
+    {
+        return $this->storeByType($request, 'trips');
     }
 
     public function store(StoreSermonRequest $request): RedirectResponse
     {
+        return $this->storeByType($request, 'historical');
+    }
+
+    private function indexByType(Request $request, string $type): View
+    {
+        $perPage = max(1, min(100, (int) $request->integer('per_page', 15)));
+        $typeValue = $this->service->typeFromSlug($type);
+
+        return view('sermons.index', [
+            'sermons' => $this->service->paginateByType($typeValue, $perPage),
+            'activeType' => $type,
+        ]);
+    }
+
+    private function createByType(string $type): View
+    {
+        $typeValue = $this->service->typeFromSlug($type);
+
+        return view('sermons.create', [
+            'playlists' => $this->service->playlistOptionsByType($typeValue),
+            'activeType' => $type,
+        ]);
+    }
+
+    private function storeByType(StoreSermonRequest $request, string $type): RedirectResponse
+    {
         $payload = $request->validated();
         $payload['file'] = $request->file('file');
+
+        $typeValue = $this->service->typeFromSlug($type);
+
+        if (! $this->service->isPlaylistInType((int) $payload['sermon_playlist_id'], $typeValue)) {
+            return back()
+                ->withErrors(['sermon_playlist_id' => 'قائمة العظات لا تنتمي إلى هذا القسم.'])
+                ->withInput();
+        }
 
         $this->service->create($payload);
 
         return redirect()
-            ->route('sermons.index')
+            ->route("sermons.{$type}.index")
             ->with('status', 'تم إنشاء العظة بنجاح.');
     }
 

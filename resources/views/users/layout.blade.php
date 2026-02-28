@@ -330,7 +330,8 @@
                 <div class="menu">
                     <a class="{{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">المستخدمون</a>
                     <a class="{{ request()->routeIs('sermons-playlists.*') ? 'active' : '' }}" href="{{ route('sermons-playlists.index') }}">قوائم العظات</a>
-                    <a class="{{ request()->routeIs('sermons.*') ? 'active' : '' }}" href="{{ route('sermons.index') }}">العظات</a>
+                    <a class="{{ request()->routeIs('sermons.historical.*') ? 'active' : '' }}" href="{{ route('sermons.historical.index') }}">العظات التاريخية</a>
+                    <a class="{{ request()->routeIs('sermons.trips.*') ? 'active' : '' }}" href="{{ route('sermons.trips.index') }}">عظات الرحلات</a>
                 </div>
 
                 <h3>عام</h3>

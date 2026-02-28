@@ -18,6 +18,17 @@ class SermonRepository
             ->paginate($perPage);
     }
 
+    public function paginateByPlaylistType(int $type, int $perPage = 15): LengthAwarePaginator
+    {
+        return $this->model->query()
+            ->with('playlist')
+            ->whereHas('playlist', function ($query) use ($type): void {
+                $query->where('type', $type);
+            })
+            ->latest('id')
+            ->paginate($perPage);
+    }
+
     public function allByPlaylistId(int $playlistId): Collection
     {
         return $this->model->query()

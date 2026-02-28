@@ -4,8 +4,15 @@
 @section('page_title', 'العظات')
 
 @section('content')
+    @php($type = $activeType ?? 'historical')
+
     <div class="actions" style="margin-bottom: 12px;">
-        <a class="btn-link" href="{{ route('sermons.create') }}">إضافة عظة جديدة</a>
+        <a class="btn-link {{ $type === 'historical' ? '' : 'btn-light' }}" href="{{ route('sermons.historical.index') }}">العظات التاريخية</a>
+        <a class="btn-link {{ $type === 'trips' ? '' : 'btn-light' }}" href="{{ route('sermons.trips.index') }}">عظات الرحلات</a>
+    </div>
+
+    <div class="actions" style="margin-bottom: 12px;">
+        <a class="btn-link" href="{{ $type === 'trips' ? route('sermons.trips.create') : route('sermons.historical.create') }}">إضافة عظة جديدة</a>
     </div>
 
     <div class="table-wrap">

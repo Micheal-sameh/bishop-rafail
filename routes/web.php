@@ -59,6 +59,15 @@ Route::middleware('auth')->group(function (): void {
         Route::get('/', [SermonController::class, 'index'])->name('index');
         Route::get('/create', [SermonController::class, 'create'])->name('create');
         Route::post('/', [SermonController::class, 'store'])->name('store');
+
+        Route::get('/historical', [SermonController::class, 'indexHistorical'])->name('historical.index');
+        Route::get('/historical/create', [SermonController::class, 'createHistorical'])->name('historical.create');
+        Route::post('/historical', [SermonController::class, 'storeHistorical'])->name('historical.store');
+
+        Route::get('/trips', [SermonController::class, 'indexTrips'])->name('trips.index');
+        Route::get('/trips/create', [SermonController::class, 'createTrips'])->name('trips.create');
+        Route::post('/trips', [SermonController::class, 'storeTrips'])->name('trips.store');
+
         Route::get('/{sermon}', [SermonController::class, 'show'])->name('show');
         Route::get('/{sermon}/edit', [SermonController::class, 'edit'])->name('edit');
         Route::put('/{sermon}', [SermonController::class, 'update'])->name('update');

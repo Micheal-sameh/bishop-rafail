@@ -4,7 +4,14 @@
 @section('page_title', 'إضافة عظة جديدة')
 
 @section('content')
-    <form method="POST" action="{{ route('sermons.store') }}" enctype="multipart/form-data">
+    @php($type = $activeType ?? 'historical')
+
+    <div class="actions" style="margin-bottom: 12px;">
+        <a class="btn-link {{ $type === 'historical' ? '' : 'btn-light' }}" href="{{ route('sermons.historical.create') }}">إنشاء عظة تاريخية</a>
+        <a class="btn-link {{ $type === 'trips' ? '' : 'btn-light' }}" href="{{ route('sermons.trips.create') }}">إنشاء عظة رحلة</a>
+    </div>
+
+    <form method="POST" action="{{ $type === 'trips' ? route('sermons.trips.store') : route('sermons.historical.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="field">
