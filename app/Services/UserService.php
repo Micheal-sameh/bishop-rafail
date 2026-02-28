@@ -12,8 +12,7 @@ class UserService
 {
     public function __construct(
         private readonly UserRepository $userRepository
-    ) {
-    }
+    ) {}
 
     public function paginateUsers(int $perPage = 15): LengthAwarePaginator
     {

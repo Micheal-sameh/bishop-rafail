@@ -54,7 +54,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard'));
+        return redirect()->intended(route('users.index'));
     }
 
     public function dashboard(Request $request): View
