@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\SermonController;
 use App\Http\Controllers\SermonPlaylistController;
 use App\Http\Controllers\UserController;
@@ -73,5 +74,29 @@ Route::middleware('auth')->group(function (): void {
         Route::put('/{sermon}', [SermonController::class, 'update'])->name('update');
         Route::get('/{sermon}/delete', [SermonController::class, 'delete'])->name('delete');
         Route::delete('/{sermon}', [SermonController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('documents')->name('documents.')->group(function (): void {
+        Route::get('/', [DocumentController::class, 'index'])->name('index');
+        Route::get('/create', [DocumentController::class, 'create'])->name('create');
+        Route::post('/', [DocumentController::class, 'store'])->name('store');
+
+        Route::get('/historical', [DocumentController::class, 'indexHistorical'])->name('historical.index');
+        Route::get('/historical/create', [DocumentController::class, 'createHistorical'])->name('historical.create');
+        Route::post('/historical', [DocumentController::class, 'storeHistorical'])->name('historical.store');
+
+        Route::get('/produced', [DocumentController::class, 'indexProduced'])->name('produced.index');
+        Route::get('/produced/create', [DocumentController::class, 'createProduced'])->name('produced.create');
+        Route::post('/produced', [DocumentController::class, 'storeProduced'])->name('produced.store');
+
+        Route::get('/artical', [DocumentController::class, 'indexArtical'])->name('artical.index');
+        Route::get('/artical/create', [DocumentController::class, 'createArtical'])->name('artical.create');
+        Route::post('/artical', [DocumentController::class, 'storeArtical'])->name('artical.store');
+
+        Route::get('/{document}', [DocumentController::class, 'show'])->name('show');
+        Route::get('/{document}/edit', [DocumentController::class, 'edit'])->name('edit');
+        Route::put('/{document}', [DocumentController::class, 'update'])->name('update');
+        Route::get('/{document}/delete', [DocumentController::class, 'delete'])->name('delete');
+        Route::delete('/{document}', [DocumentController::class, 'destroy'])->name('destroy');
     });
 });

@@ -332,6 +332,9 @@
                     <a class="{{ request()->routeIs('sermons-playlists.*') ? 'active' : '' }}" href="{{ route('sermons-playlists.index') }}">قوائم العظات</a>
                     <a class="{{ request()->routeIs('sermons.historical.*') ? 'active' : '' }}" href="{{ route('sermons.historical.index') }}">العظات التاريخية</a>
                     <a class="{{ request()->routeIs('sermons.trips.*') ? 'active' : '' }}" href="{{ route('sermons.trips.index') }}">عظات الرحلات</a>
+                    <a class="{{ request()->routeIs('documents.historical.*') ? 'active' : '' }}" href="{{ route('documents.historical.index') }}">كتب تاريخية</a>
+                    <a class="{{ request()->routeIs('documents.produced.*') ? 'active' : '' }}" href="{{ route('documents.produced.index') }}">كتب اصدارات المركز</a>
+                    <a class="{{ request()->routeIs('documents.artical.*') ? 'active' : '' }}" href="{{ route('documents.artical.index') }}">كتب مقالات</a>
                 </div>
 
                 <h3>عام</h3>
