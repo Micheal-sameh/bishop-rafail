@@ -19,9 +19,9 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($playlists as $playlist)
+                @forelse ($playlists as $key => $playlist)
                     <tr>
-                        <td>{{ $playlist->id }}</td>
+                        <td>{{ $key + 1 }}</td>
                         <td>{{ $playlist->title }}</td>
                         <td>{{ $typeLabel((int) $playlist->type) }}</td>
                         <td>

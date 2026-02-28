@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Api\SermonIndexRequest;
 use App\Http\Resources\SermonResource;
 use App\Services\SermonService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class SermonController extends BaseController
 {
@@ -13,11 +13,9 @@ class SermonController extends BaseController
         private readonly SermonService $service
     ) {}
 
-    public function index(Request $request): JsonResponse
+    public function index(SermonIndexRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'playlist_id' => ['required', 'integer', 'exists:sermons_playlists,id'],
-        ]);
+        $validated = $request->validated();
 
         $items = $this->service->allByPlaylistId((int) $validated['playlist_id']);
 

@@ -59,6 +59,19 @@ class UserService
         return UserStatus::all();
     }
 
+    public function updateProfile(User $user, array $data): User
+    {
+        $payload = [
+            'name' => $data['name'],
+        ];
+
+        if (! empty($data['password'])) {
+            $payload['password'] = Hash::make((string) $data['password']);
+        }
+
+        return $this->userRepository->update($user, $payload);
+    }
+
     public function defaultPassword(): string
     {
         return (string) config('app.default_user_password', self::DEFAULT_PASSWORD);

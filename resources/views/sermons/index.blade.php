@@ -16,29 +16,21 @@
                     <th>العنوان</th>
                     <th>القائمة</th>
                     <th>الرابط</th>
-                    <th>ملف</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($sermons as $sermon)
+                @forelse ($sermons as $key => $sermon)
                     @php($media = $sermon->getFirstMedia('sermon_files'))
                     <tr>
-                        <td>{{ $sermon->id }}</td>
+                        <td>{{ $key+1 }}</td>
                         <td>{{ $sermon->title }}</td>
                         <td>{{ $sermon->playlist?->title }}</td>
                         <td>
                             @if ($sermon->url)
                                 <a class="btn-link btn-light" href="{{ $sermon->url }}" target="_blank">فتح الرابط</a>
                             @else
-                                <span class="meta">—</span>
-                            @endif
-                        </td>
-                        <td>
-                            @if ($media)
-                                <a class="btn-link btn-light" href="{{ $media->getUrl() }}" target="_blank">تحميل الملف</a>
-                            @else
-                                <span class="meta">—</span>
+                                <a class="btn-link btn-light" href="{{ $sermon->getFirstMediaUrl('sermons') }}" target="_blank">فتح الرابط</a>
                             @endif
                         </td>
                         <td>

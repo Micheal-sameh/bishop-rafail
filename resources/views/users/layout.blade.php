@@ -91,6 +91,22 @@
             padding: 24px;
         }
 
+        .burger {
+            display: none;
+            border: 1px solid #cebfa4;
+            background: #fffaf0;
+            color: var(--accent-strong);
+            border-radius: 8px;
+            padding: 7px 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        .overlay {
+            display: none;
+        }
+
         .top {
             display: flex;
             align-items: center;
@@ -181,12 +197,41 @@
             }
 
             .sidebar {
-                border-left: 0;
-                border-bottom: 1px solid #dccaaa;
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: min(300px, 82vw);
+                border-left: 1px solid #dccaaa;
+                border-bottom: 0;
+                z-index: 30;
+                transform: translateX(105%);
+                transition: transform 0.22s ease;
+                overflow-y: auto;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.35);
+                z-index: 20;
+            }
+
+            .overlay.open {
+                display: block;
             }
 
             .content {
                 padding: 16px;
+            }
+
+            .burger {
+                display: inline-block;
             }
 
             .top {
@@ -206,8 +251,9 @@
 </head>
 <body>
     <main class="container">
+        <div id="sidebar-overlay" class="overlay"></div>
         <div class="page">
-            <aside class="sidebar">
+            <aside id="app-sidebar" class="sidebar">
                 <h2 class="brand">مركز البابا شنوده</h2>
 
                 <h3>الأقسام</h3>
@@ -230,6 +276,7 @@
 
             <section class="content">
                 <header class="top">
+                    <button id="sidebar-toggle" class="burger" type="button" aria-label="فتح القائمة">☰</button>
                     <h1 class="title">@yield('page_title', 'لوحة الإدارة')</h1>
                 </header>
 
@@ -245,5 +292,36 @@
             </section>
         </div>
     </main>
+
+    <script>
+        (function () {
+            var toggleButton = document.getElementById('sidebar-toggle');
+            var sidebar = document.getElementById('app-sidebar');
+            var overlay = document.getElementById('sidebar-overlay');
+
+            if (!toggleButton || !sidebar || !overlay) {
+                return;
+            }
+
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('open');
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('open');
+            }
+
+            toggleButton.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', closeSidebar);
+
+            window.addEventListener('resize', function () {
+                if (window.innerWidth > 980) {
+                    closeSidebar();
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

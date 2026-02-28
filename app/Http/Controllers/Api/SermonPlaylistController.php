@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\SermonsTypes;
+use App\Http\Requests\Api\SermonPlaylistIndexRequest;
 use App\Http\Resources\SermonPlaylistResource;
 use App\Services\SermonPlaylistService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class SermonPlaylistController extends BaseController
 {
@@ -15,11 +13,9 @@ class SermonPlaylistController extends BaseController
         private readonly SermonPlaylistService $service
     ) {}
 
-    public function index(Request $request): JsonResponse
+    public function index(SermonPlaylistIndexRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'type' => ['nullable', 'integer', Rule::in(SermonsTypes::getValues())],
-        ]);
+        $validated = $request->validated();
 
         $playlists = $this->service->allByType(isset($validated['type']) ? (int) $validated['type'] : null);
 

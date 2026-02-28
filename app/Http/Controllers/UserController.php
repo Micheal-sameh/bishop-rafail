@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\ProfileUpdateRequest;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
@@ -87,6 +88,16 @@ class UserController extends Controller
         return view('users.profile', [
             'user' => $request->user(),
         ]);
+    }
+
+    public function updateProfile(ProfileUpdateRequest $request): RedirectResponse
+    {
+        $user = $request->user();
+        $this->userService->updateProfile($user, $request->validated());
+
+        return redirect()
+            ->route('profile')
+            ->with('status', 'تم تحديث الملف الشخصي بنجاح.');
     }
 
     public function resetPassword(User $user): RedirectResponse
