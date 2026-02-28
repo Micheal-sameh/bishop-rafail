@@ -30,6 +30,10 @@
             padding: 24px;
         }
 
+        body.no-scroll {
+            overflow: hidden;
+        }
+
         .container {
             width: min(1100px, 100%);
             margin: 0 auto;
@@ -53,10 +57,27 @@
             padding: 18px;
         }
 
+        .sidebar-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
         .brand {
             margin: 0 0 16px;
             font-size: 1.1rem;
             color: var(--accent-strong);
+        }
+
+        .sidebar-close {
+            display: none;
+            border: 1px solid #cebfa4;
+            background: #fffaf0;
+            color: var(--accent-strong);
+            border-radius: 8px;
+            padding: 5px 10px;
+            cursor: pointer;
         }
 
         .sidebar h3 {
@@ -89,6 +110,7 @@
 
         .content {
             padding: 24px;
+            min-width: 0;
         }
 
         .burger {
@@ -188,7 +210,14 @@
 
         @media (max-width: 980px) {
             body {
-                padding: 12px;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                border-radius: 0;
+                border-left: 0;
+                border-right: 0;
             }
 
             .page {
@@ -234,17 +263,55 @@
                 display: inline-block;
             }
 
+            .sidebar-close {
+                display: inline-block;
+            }
+
             .top {
+                justify-content: flex-start;
+                align-items: center;
                 margin-bottom: 12px;
             }
 
             .title {
                 font-size: 1.3rem;
+                margin: 0;
             }
 
             th, td {
                 padding: 8px;
                 font-size: 0.92rem;
+            }
+
+            .actions {
+                gap: 6px;
+            }
+
+            .btn, .btn-link {
+                font-size: 0.9rem;
+                padding: 9px 12px;
+            }
+
+            .table-wrap {
+                -webkit-overflow-scrolling: touch;
+            }
+
+            table {
+                min-width: 620px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .content {
+                padding: 12px;
+            }
+
+            .title {
+                font-size: 1.15rem;
+            }
+
+            .burger {
+                padding: 6px 9px;
             }
         }
     </style>
@@ -254,7 +321,10 @@
         <div id="sidebar-overlay" class="overlay"></div>
         <div class="page">
             <aside id="app-sidebar" class="sidebar">
-                <h2 class="brand">مركز البابا شنوده</h2>
+                <div class="sidebar-head">
+                    <h2 class="brand">مركز البابا شنوده</h2>
+                    <button id="sidebar-close" class="sidebar-close" type="button" aria-label="إغلاق القائمة">✕</button>
+                </div>
 
                 <h3>الأقسام</h3>
                 <div class="menu">
@@ -296,6 +366,7 @@
     <script>
         (function () {
             var toggleButton = document.getElementById('sidebar-toggle');
+            var closeButton = document.getElementById('sidebar-close');
             var sidebar = document.getElementById('app-sidebar');
             var overlay = document.getElementById('sidebar-overlay');
 
@@ -306,15 +377,31 @@
             function toggleSidebar() {
                 sidebar.classList.toggle('open');
                 overlay.classList.toggle('open');
+                document.body.classList.toggle('no-scroll', sidebar.classList.contains('open'));
             }
 
             function closeSidebar() {
                 sidebar.classList.remove('open');
                 overlay.classList.remove('open');
+                document.body.classList.remove('no-scroll');
             }
 
             toggleButton.addEventListener('click', toggleSidebar);
             overlay.addEventListener('click', closeSidebar);
+
+            if (closeButton) {
+                closeButton.addEventListener('click', closeSidebar);
+            }
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    closeSidebar();
+                }
+            });
+
+            sidebar.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', closeSidebar);
+            });
 
             window.addEventListener('resize', function () {
                 if (window.innerWidth > 980) {
