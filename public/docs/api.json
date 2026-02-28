@@ -1,0 +1,467 @@
+{
+	"openapi": "3.0.3",
+	"info": {
+		"title": "Bishop Rafail API",
+		"version": "1.0.0",
+		"description": "Complete API documentation for مركز البابا شنوده"
+	},
+	"servers": [
+		{
+			"url": "http://localhost",
+			"description": "Local"
+		}
+	],
+	"tags": [
+		{ "name": "System" },
+		{ "name": "Auth" },
+		{ "name": "Sermons" },
+		{ "name": "Documents" },
+		{ "name": "Media" },
+		{ "name": "Education" }
+	],
+	"paths": {
+		"/api/documentation": {
+			"get": {
+				"tags": ["System"],
+				"summary": "Swagger UI route",
+				"responses": {
+					"200": {
+						"description": "Swagger documentation HTML"
+					}
+				}
+			}
+		},
+		"/api/documetation": {
+			"get": {
+				"tags": ["System"],
+				"summary": "Legacy documentation route",
+				"responses": {
+					"200": {
+						"description": "Swagger documentation HTML"
+					}
+				}
+			}
+		},
+		"/api/oauth2-callback": {
+			"get": {
+				"tags": ["System"],
+				"summary": "OAuth2 callback route used by Swagger",
+				"responses": {
+					"200": {
+						"description": "OAuth2 callback response"
+					}
+				}
+			}
+		},
+		"/api/user": {
+			"get": {
+				"tags": ["Auth"],
+				"summary": "Get authenticated user",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Authenticated user"
+					},
+					"401": {
+						"description": "Unauthenticated"
+					}
+				}
+			}
+		},
+		"/api/v1/sermons-playlists": {
+			"get": {
+				"tags": ["Sermons"],
+				"summary": "Get sermon playlists",
+				"parameters": [
+					{
+						"name": "type",
+						"in": "query",
+						"required": false,
+						"schema": {
+							"type": "integer",
+							"enum": [
+								1,
+								2
+							]
+						},
+						"description": "Playlist type (historical=1, trips=2)"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Playlists fetched",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponseSermonPlaylistCollection"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation error"
+					}
+				}
+			}
+		},
+		"/api/v1/sermons": {
+			"get": {
+				"tags": ["Sermons"],
+				"summary": "Get sermons by playlist",
+				"parameters": [
+					{
+						"name": "playlist_id",
+						"in": "query",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"minimum": 1
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Sermons fetched",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponseSermonCollection"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation error"
+					}
+				}
+			}
+		},
+		"/api/v1/books": {
+			"get": {
+				"tags": ["Documents"],
+				"summary": "Get books by type",
+				"parameters": [
+					{
+						"name": "type",
+						"in": "query",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"enum": [
+								1,
+								2,
+								3
+							]
+						},
+						"description": "Book type (historical=1, produced=2, artical=3)"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Books fetched",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponseDocumentCollection"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation error"
+					}
+				}
+			}
+		},
+		"/api/v1/films": {
+			"get": {
+				"tags": ["Media"],
+				"summary": "Get all films",
+				"responses": {
+					"200": {
+						"description": "Films fetched",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponseFilmCollection"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/gallery": {
+			"get": {
+				"tags": ["Media"],
+				"summary": "Get all gallery images",
+				"responses": {
+					"200": {
+						"description": "Gallery fetched",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponseGalleryCollection"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/subjects": {
+			"get": {
+				"tags": ["Education"],
+				"summary": "Get subjects by year",
+				"parameters": [
+					{
+						"name": "year",
+						"in": "query",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"minimum": 1900,
+							"maximum": 2100
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Subjects fetched",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponseSubjectCollection"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation error"
+					}
+				}
+			}
+		},
+		"/api/v1/lectures": {
+			"get": {
+				"tags": ["Education"],
+				"summary": "Get lectures by subject",
+				"parameters": [
+					{
+						"name": "subject_id",
+						"in": "query",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"minimum": 1
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Lectures fetched",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponseLectureCollection"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation error"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "Token"
+			}
+		},
+		"schemas": {
+			"ApiEnvelope": {
+				"type": "object",
+				"properties": {
+					"status_code": { "type": "integer", "example": 200 },
+					"message": { "type": "string", "example": "success" },
+					"data": {},
+					"additional_data": {}
+				},
+				"required": ["status_code", "message", "data"]
+			},
+			"EnumObject": {
+				"type": "object",
+				"properties": {
+					"value": { "type": "integer" },
+					"label": { "type": "string" }
+				}
+			},
+			"SermonPlaylist": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "integer" },
+					"title": { "type": "string" },
+					"type": { "$ref": "#/components/schemas/EnumObject" },
+					"sermons_count": { "type": "integer", "nullable": true }
+				}
+			},
+			"Sermon": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "integer" },
+					"title": { "type": "string" },
+					"url": { "type": "string", "nullable": true }
+				}
+			},
+			"Document": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "integer" },
+					"title": { "type": "string" },
+					"url": { "type": "string", "nullable": true },
+					"type": { "$ref": "#/components/schemas/EnumObject" }
+				}
+			},
+			"Film": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "integer" },
+					"title": { "type": "string" },
+					"url": { "type": "string" }
+				}
+			},
+			"Gallery": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "integer" },
+					"image": { "type": "string", "nullable": true }
+				}
+			},
+			"Subject": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "integer" },
+					"title": { "type": "string" },
+					"year": { "type": "integer" }
+				}
+			},
+			"Lecture": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "integer" },
+					"title": { "type": "string" },
+					"url": { "type": "string", "nullable": true },
+					"subject_id": { "type": "integer" },
+					"subject_title": { "type": "string", "nullable": true }
+				}
+			},
+			"ApiResponseSermonPlaylistCollection": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/ApiEnvelope" },
+					{
+						"type": "object",
+						"properties": {
+							"data": {
+								"type": "array",
+								"items": { "$ref": "#/components/schemas/SermonPlaylist" }
+							}
+						}
+					}
+				]
+			},
+			"ApiResponseSermonCollection": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/ApiEnvelope" },
+					{
+						"type": "object",
+						"properties": {
+							"data": {
+								"type": "array",
+								"items": { "$ref": "#/components/schemas/Sermon" }
+							}
+						}
+					}
+				]
+			},
+			"ApiResponseDocumentCollection": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/ApiEnvelope" },
+					{
+						"type": "object",
+						"properties": {
+							"data": {
+								"type": "array",
+								"items": { "$ref": "#/components/schemas/Document" }
+							}
+						}
+					}
+				]
+			},
+			"ApiResponseFilmCollection": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/ApiEnvelope" },
+					{
+						"type": "object",
+						"properties": {
+							"data": {
+								"type": "array",
+								"items": { "$ref": "#/components/schemas/Film" }
+							}
+						}
+					}
+				]
+			},
+			"ApiResponseGalleryCollection": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/ApiEnvelope" },
+					{
+						"type": "object",
+						"properties": {
+							"data": {
+								"type": "array",
+								"items": { "$ref": "#/components/schemas/Gallery" }
+							}
+						}
+					}
+				]
+			},
+			"ApiResponseSubjectCollection": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/ApiEnvelope" },
+					{
+						"type": "object",
+						"properties": {
+							"data": {
+								"type": "array",
+								"items": { "$ref": "#/components/schemas/Subject" }
+							}
+						}
+					}
+				]
+			},
+			"ApiResponseLectureCollection": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/ApiEnvelope" },
+					{
+						"type": "object",
+						"properties": {
+							"data": {
+								"type": "array",
+								"items": { "$ref": "#/components/schemas/Lecture" }
+							}
+						}
+					}
+				]
+			}
+		}
+	}
+}
