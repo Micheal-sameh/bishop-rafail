@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTOs\DocumentDataDTO;
 use App\Enums\BooksTypes;
 use App\Models\Document;
 use App\Repositories\DocumentRepository;
@@ -29,8 +30,9 @@ class DocumentService
         return $this->repository->allByType($type);
     }
 
-    public function create(array $data): Document
+    public function create(DocumentDataDTO $dto): Document
     {
+        $data = $dto->toArray();
         $file = $data['file'] ?? null;
         unset($data['file']);
 
@@ -48,8 +50,9 @@ class DocumentService
         return $this->repository->findOrFail($id);
     }
 
-    public function update(Document $document, array $data): Document
+    public function update(Document $document, DocumentDataDTO $dto): Document
     {
+        $data = $dto->toArray();
         $file = $data['file'] ?? null;
         unset($data['file']);
 

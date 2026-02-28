@@ -44,4 +44,6 @@
 
         <button class="btn" type="submit">حفظ العظة</button>
     </form>
+
+    @include('partials.url_or_file_toggle', ['urlId' => 'url', 'fileId' => 'file'])
 @endsection

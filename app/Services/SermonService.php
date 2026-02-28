@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTOs\SermonDataDTO;
 use App\Enums\SermonsTypes;
 use App\Models\Sermon;
 use App\Models\SermonPlaylist;
@@ -30,8 +31,9 @@ class SermonService
         return $this->repository->allByPlaylistId($playlistId);
     }
 
-    public function create(array $data): Sermon
+    public function create(SermonDataDTO $dto): Sermon
     {
+        $data = $dto->toArray();
         $file = $data['file'] ?? null;
         unset($data['file']);
 
@@ -49,8 +51,9 @@ class SermonService
         return $this->repository->findOrFail($id);
     }
 
-    public function update(Sermon $sermon, array $data): Sermon
+    public function update(Sermon $sermon, SermonDataDTO $dto): Sermon
     {
+        $data = $dto->toArray();
         $file = $data['file'] ?? null;
         unset($data['file']);
 

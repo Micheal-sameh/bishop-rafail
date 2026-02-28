@@ -4,7 +4,7 @@
 @section('page_title', 'تحديث العظة')
 
 @section('content')
-    @php($media = $sermon->getFirstMedia('sermon_files'))
+    @php($media = $sermon->getFirstMedia('sermons'))
 
     <form method="POST" action="{{ route('sermons.update', $sermon) }}" enctype="multipart/form-data">
         @csrf
@@ -45,4 +45,6 @@
             <a class="btn-link btn-light" href="{{ route('sermons.show', $sermon) }}">إلغاء</a>
         </div>
     </form>
+
+    @include('partials.url_or_file_toggle', ['urlId' => 'url', 'fileId' => 'file'])
 @endsection

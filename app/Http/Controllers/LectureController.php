@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\LectureDataDTO;
 use App\Http\Requests\Lecture\StoreLectureRequest;
 use App\Http\Requests\Lecture\UpdateLectureRequest;
 use App\Models\Lecture;
@@ -34,10 +35,9 @@ class LectureController extends Controller
 
     public function store(StoreLectureRequest $request): RedirectResponse
     {
-        $payload = $request->validated();
-        $payload['media'] = $request->file('media');
-
-        $this->service->create($payload);
+        $this->service->create(
+            LectureDataDTO::fromArray($request->validated(), $request->file('media'))
+        );
 
         return redirect()->route('lectures.index')->with('status', 'تم إنشاء المحاضرة بنجاح.');
     }
@@ -59,10 +59,10 @@ class LectureController extends Controller
 
     public function update(UpdateLectureRequest $request, Lecture $lecture): RedirectResponse
     {
-        $payload = $request->validated();
-        $payload['media'] = $request->file('media');
-
-        $this->service->update($lecture, $payload);
+        $this->service->update(
+            $lecture,
+            LectureDataDTO::fromArray($request->validated(), $request->file('media'))
+        );
 
         return redirect()->route('lectures.show', $lecture)->with('status', 'تم تحديث المحاضرة بنجاح.');
     }

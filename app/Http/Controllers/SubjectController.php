@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\SubjectDataDTO;
 use App\Http\Requests\Subject\StoreSubjectRequest;
 use App\Http\Requests\Subject\UpdateSubjectRequest;
 use App\Models\Subject;
@@ -32,7 +33,7 @@ class SubjectController extends Controller
 
     public function store(StoreSubjectRequest $request): RedirectResponse
     {
-        $this->service->create($request->validated());
+        $this->service->create(SubjectDataDTO::fromArray($request->validated()));
 
         return redirect()->route('subjects.index')->with('status', 'تم إنشاء المادة بنجاح.');
     }
@@ -53,7 +54,7 @@ class SubjectController extends Controller
 
     public function update(UpdateSubjectRequest $request, Subject $subject): RedirectResponse
     {
-        $this->service->update($subject, $request->validated());
+        $this->service->update($subject, SubjectDataDTO::fromArray($request->validated()));
 
         return redirect()->route('subjects.show', $subject)->with('status', 'تم تحديث المادة بنجاح.');
     }

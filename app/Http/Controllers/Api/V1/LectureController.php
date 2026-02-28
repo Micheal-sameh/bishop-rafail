@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\DTOs\LectureFilterDTO;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\Api\LectureIndexRequest;
 use App\Http\Resources\LectureResource;
@@ -16,8 +17,8 @@ class LectureController extends BaseController
 
     public function index(LectureIndexRequest $request): JsonResponse
     {
-        $validated = $request->validated();
+        $dto = LectureFilterDTO::fromArray($request->validated());
 
-        return $this->apiResponse(LectureResource::collection($this->service->allBySubject((int) $validated['subject_id'])));
+        return $this->apiResponse(LectureResource::collection($this->service->allBySubject((int) $dto->subject_id)));
     }
 }

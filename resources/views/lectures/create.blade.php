@@ -40,4 +40,6 @@
             <a class="btn-link btn-light" href="{{ route('lectures.index') }}">إلغاء</a>
         </div>
     </form>
+
+    @include('partials.url_or_file_toggle', ['urlId' => 'url', 'fileId' => 'media'])
 @endsection

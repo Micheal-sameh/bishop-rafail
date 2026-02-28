@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\DocumentDataDTO;
 use App\Http\Requests\Document\StoreDocumentRequest;
 use App\Http\Requests\Document\UpdateDocumentRequest;
 use App\Models\Document;
@@ -97,10 +98,11 @@ class DocumentController extends Controller
     private function storeByType(StoreDocumentRequest $request, string $type): RedirectResponse
     {
         $payload = $request->validated();
-        $payload['file'] = $request->file('file');
         $payload['type'] = $this->service->typeFromSlug($type);
 
-        $this->service->create($payload);
+        $this->service->create(
+            DocumentDataDTO::fromArray($payload, $request->file('file'))
+        );
 
         return redirect()
             ->route("documents.{$type}.index")
@@ -123,10 +125,10 @@ class DocumentController extends Controller
 
     public function update(UpdateDocumentRequest $request, Document $document): RedirectResponse
     {
-        $payload = $request->validated();
-        $payload['file'] = $request->file('file');
-
-        $updatedDocument = $this->service->update($document, $payload);
+        $updatedDocument = $this->service->update(
+            $document,
+            DocumentDataDTO::fromArray($request->validated(), $request->file('file'))
+        );
 
         return redirect()
             ->route('documents.show', $updatedDocument)

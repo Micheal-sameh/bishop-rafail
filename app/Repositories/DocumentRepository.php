@@ -13,6 +13,7 @@ class DocumentRepository
     public function paginate(int $perPage = 15): LengthAwarePaginator
     {
         return $this->model->query()
+            ->select(['id', 'title', 'url', 'type', 'created_at'])
             ->latest('id')
             ->paginate($perPage);
     }
@@ -20,6 +21,7 @@ class DocumentRepository
     public function paginateByType(int $type, int $perPage = 15): LengthAwarePaginator
     {
         return $this->model->query()
+            ->select(['id', 'title', 'url', 'type', 'created_at'])
             ->where('type', $type)
             ->latest('id')
             ->paginate($perPage);
@@ -28,6 +30,7 @@ class DocumentRepository
     public function allByType(int $type): Collection
     {
         return $this->model->query()
+            ->select(['id', 'title', 'url', 'type'])
             ->where('type', $type)
             ->latest('id')
             ->get();
@@ -40,7 +43,9 @@ class DocumentRepository
 
     public function findOrFail(int $id): Document
     {
-        return $this->model->query()->findOrFail($id);
+        return $this->model->query()
+            ->select(['id', 'title', 'url', 'type', 'created_at', 'updated_at'])
+            ->findOrFail($id);
     }
 
     public function update(Document $document, array $data): Document

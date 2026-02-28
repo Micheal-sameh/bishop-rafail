@@ -91,6 +91,17 @@
             gap: 8px;
         }
 
+        .menu-group {
+            margin-bottom: 14px;
+        }
+
+        .menu-title {
+            margin: 0 0 8px;
+            font-size: 0.85rem;
+            color: var(--soft-ink);
+            opacity: 0.9;
+        }
+
         .menu a {
             display: block;
             padding: 9px 10px;
@@ -327,23 +338,49 @@
                 </div>
 
                 <h3>الأقسام</h3>
-                <div class="menu">
-                    <a class="{{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">المستخدمون</a>
-                    <a class="{{ request()->routeIs('sermons-playlists.*') ? 'active' : '' }}" href="{{ route('sermons-playlists.index') }}">قوائم العظات</a>
-                    <a class="{{ request()->routeIs('sermons.historical.*') ? 'active' : '' }}" href="{{ route('sermons.historical.index') }}">العظات التاريخية</a>
-                    <a class="{{ request()->routeIs('sermons.trips.*') ? 'active' : '' }}" href="{{ route('sermons.trips.index') }}">عظات الرحلات</a>
-                    <a class="{{ request()->routeIs('documents.historical.*') ? 'active' : '' }}" href="{{ route('documents.historical.index') }}">كتب تاريخية</a>
-                    <a class="{{ request()->routeIs('documents.produced.*') ? 'active' : '' }}" href="{{ route('documents.produced.index') }}">كتب اصدارات المركز</a>
-                    <a class="{{ request()->routeIs('documents.artical.*') ? 'active' : '' }}" href="{{ route('documents.artical.index') }}">كتب مقالات</a>
-                    <a class="{{ request()->routeIs('films.*') ? 'active' : '' }}" href="{{ route('films.index') }}">الأفلام</a>
-                    <a class="{{ request()->routeIs('gallery.*') ? 'active' : '' }}" href="{{ route('gallery.index') }}">المعرض</a>
-                    <a class="{{ request()->routeIs('subjects.*') ? 'active' : '' }}" href="{{ route('subjects.index') }}">المواد</a>
-                    <a class="{{ request()->routeIs('lectures.*') ? 'active' : '' }}" href="{{ route('lectures.index') }}">المحاضرات</a>
+                <div class="menu-group">
+                    <p class="menu-title">العظات</p>
+                    <div class="menu">
+                        <a class="{{ request()->routeIs('sermons-playlists.*') ? 'active' : '' }}" href="{{ route('sermons-playlists.index') }}">قوائم العظات</a>
+                        <a class="{{ request()->routeIs('sermons.historical.*') ? 'active' : '' }}" href="{{ route('sermons.historical.index') }}">العظات التاريخية</a>
+                        <a class="{{ request()->routeIs('sermons.trips.*') ? 'active' : '' }}" href="{{ route('sermons.trips.index') }}">عظات الرحلات</a>
+                    </div>
+                </div>
+                <div class="menu-group">
+                    <p class="menu-title">الكتب</p>
+                    <div class="menu">
+                        <a class="{{ request()->routeIs('documents.historical.*') ? 'active' : '' }}" href="{{ route('documents.historical.index') }}">كتب تاريخية</a>
+                        <a class="{{ request()->routeIs('documents.produced.*') ? 'active' : '' }}" href="{{ route('documents.produced.index') }}">كتب اصدارات المركز</a>
+                        <a class="{{ request()->routeIs('documents.artical.*') ? 'active' : '' }}" href="{{ route('documents.artical.index') }}">كتب مقالات</a>
+                    </div>
+                </div>
+
+                <div class="menu-group">
+                    <p class="menu-title">الميديا</p>
+                    <div class="menu">
+                        <a class="{{ request()->routeIs('films.*') ? 'active' : '' }}" href="{{ route('films.index') }}">الأفلام</a>
+                        <a class="{{ request()->routeIs('gallery.*') ? 'active' : '' }}" href="{{ route('gallery.index') }}">المعرض</a>
+                    </div>
+                </div>
+
+                <div class="menu-group">
+                    <p class="menu-title">التعليم</p>
+                    <div class="menu">
+                        <a class="{{ request()->routeIs('subjects.*') ? 'active' : '' }}" href="{{ route('subjects.index') }}">المواد</a>
+                        <a class="{{ request()->routeIs('lectures.*') ? 'active' : '' }}" href="{{ route('lectures.index') }}">المحاضرات</a>
+                    </div>
+                </div>
+
+                <div class="menu-group">
+                    <p class="menu-title">إدارة النظام</p>
+                    <div class="menu">
+                        <a class="{{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">المستخدمون</a>
+                    </div>
                 </div>
 
                 <h3>عام</h3>
                 <div class="menu">
-                    <a href="{{ route('dashboard') }}">لوحة التحكم</a>
+                    {{-- <a href="{{ route('dashboard') }}">لوحة التحكم</a> --}}
                     <a class="{{ request()->routeIs('profile') ? 'active' : '' }}" href="{{ route('profile') }}">الملف الشخصي</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

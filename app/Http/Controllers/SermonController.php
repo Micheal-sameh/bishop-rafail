@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\SermonDataDTO;
 use App\Http\Requests\Sermon\StoreSermonRequest;
 use App\Http\Requests\Sermon\UpdateSermonRequest;
 use App\Models\Sermon;
@@ -85,7 +86,6 @@ class SermonController extends Controller
     private function storeByType(StoreSermonRequest $request, string $type): RedirectResponse
     {
         $payload = $request->validated();
-        $payload['file'] = $request->file('file');
 
         $typeValue = $this->service->typeFromSlug($type);
 
@@ -95,7 +95,9 @@ class SermonController extends Controller
                 ->withInput();
         }
 
-        $this->service->create($payload);
+        $this->service->create(
+            SermonDataDTO::fromArray($payload, $request->file('file'))
+        );
 
         return redirect()
             ->route("sermons.{$type}.index")
@@ -119,10 +121,10 @@ class SermonController extends Controller
 
     public function update(UpdateSermonRequest $request, Sermon $sermon): RedirectResponse
     {
-        $payload = $request->validated();
-        $payload['file'] = $request->file('file');
-
-        $this->service->update($sermon, $payload);
+        $this->service->update(
+            $sermon,
+            SermonDataDTO::fromArray($request->validated(), $request->file('file'))
+        );
 
         return redirect()
             ->route('sermons.show', $sermon)

@@ -12,12 +12,16 @@ class SubjectRepository
 
     public function paginate(int $perPage = 15): LengthAwarePaginator
     {
-        return $this->model->query()->latest('id')->paginate($perPage);
+        return $this->model->query()
+            ->select(['id', 'title', 'year', 'created_at'])
+            ->latest('id')
+            ->paginate($perPage);
     }
 
     public function allByYear(int $year): Collection
     {
         return $this->model->query()
+            ->select(['id', 'title', 'year'])
             ->where('year', $year)
             ->latest('id')
             ->get();
@@ -30,7 +34,9 @@ class SubjectRepository
 
     public function findOrFail(int $id): Subject
     {
-        return $this->model->query()->findOrFail($id);
+        return $this->model->query()
+            ->select(['id', 'title', 'year', 'created_at', 'updated_at'])
+            ->findOrFail($id);
     }
 
     public function update(Subject $subject, array $data): Subject

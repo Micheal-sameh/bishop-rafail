@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTOs\LectureDataDTO;
 use App\Models\Lecture;
 use App\Models\Subject;
 use App\Repositories\LectureRepository;
@@ -24,8 +25,9 @@ class LectureService
         return $this->repository->allBySubject($subjectId);
     }
 
-    public function create(array $data): Lecture
+    public function create(LectureDataDTO $dto): Lecture
     {
+        $data = $dto->toArray();
         $media = $data['media'] ?? null;
         unset($data['media']);
 
@@ -43,8 +45,9 @@ class LectureService
         return $this->repository->findOrFail($id);
     }
 
-    public function update(Lecture $lecture, array $data): Lecture
+    public function update(Lecture $lecture, LectureDataDTO $dto): Lecture
     {
+        $data = $dto->toArray();
         $media = $data['media'] ?? null;
         unset($data['media']);
 

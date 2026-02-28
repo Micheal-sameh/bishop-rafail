@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTOs\SubjectDataDTO;
 use App\Models\Subject;
 use App\Repositories\SubjectRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -23,9 +24,9 @@ class SubjectService
         return $this->repository->allByYear($year);
     }
 
-    public function create(array $data): Subject
+    public function create(SubjectDataDTO $data): Subject
     {
-        return $this->repository->create($data);
+        return $this->repository->create($data->toArray());
     }
 
     public function findOrFail(int $id): Subject
@@ -33,9 +34,9 @@ class SubjectService
         return $this->repository->findOrFail($id);
     }
 
-    public function update(Subject $subject, array $data): Subject
+    public function update(Subject $subject, SubjectDataDTO $data): Subject
     {
-        return $this->repository->update($subject, $data);
+        return $this->repository->update($subject, $data->toArray());
     }
 
     public function delete(Subject $subject): bool
