@@ -41,7 +41,5 @@
         </table>
     </div>
 
-    <div class="pagination">
-        {{ $subjects->links() }}
-    </div>
+    @include('partials.pagination', ['paginator' => $subjects])
 @endsection

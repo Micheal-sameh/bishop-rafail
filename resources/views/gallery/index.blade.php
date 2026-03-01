@@ -42,7 +42,5 @@
         </table>
     </div>
 
-    <div class="pagination">
-        {{ $items->links() }}
-    </div>
+    @include('partials.pagination', ['paginator' => $items])
 @endsection
