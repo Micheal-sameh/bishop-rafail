@@ -56,6 +56,25 @@
             line-height: 1.45;
         }
 
+        .login-brand {
+            text-align: center;
+            margin: 2px 0 20px;
+        }
+
+        .login-logo {
+            width: 150px;
+            height: auto;
+            object-fit: contain;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .login-brand-text {
+            margin: 0;
+            color: var(--soft-ink);
+            line-height: 1.45;
+        }
+
         .field {
             margin-bottom: 14px;
         }
