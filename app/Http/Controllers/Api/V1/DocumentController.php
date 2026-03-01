@@ -19,6 +19,6 @@ class DocumentController extends BaseController
         $validated = $request->validated();
         $documents = $this->service->allByType((int) $validated['type']);
 
-        return $this->apiResponse(DocumentResource::collection($documents));
+        return $this->respondResource(DocumentResource::collection($documents));
     }
 }

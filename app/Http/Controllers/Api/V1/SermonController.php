@@ -20,6 +20,6 @@ class SermonController extends BaseController
 
         $items = $this->service->allByPlaylistId((int) $validated['playlist_id']);
 
-        return $this->apiResponse(SermonResource::collection($items));
+        return $this->respondResource(SermonResource::collection($items));
     }
 }

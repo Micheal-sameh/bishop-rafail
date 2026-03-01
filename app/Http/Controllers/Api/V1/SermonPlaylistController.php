@@ -20,6 +20,6 @@ class SermonPlaylistController extends BaseController
 
         $playlists = $this->service->allByType(isset($validated['type']) ? (int) $validated['type'] : null);
 
-        return $this->apiResponse(SermonPlaylistResource::collection($playlists));
+        return $this->respondResource(SermonPlaylistResource::collection($playlists));
     }
 }

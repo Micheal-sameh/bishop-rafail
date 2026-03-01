@@ -19,6 +19,6 @@ class SubjectController extends BaseController
     {
         $dto = SubjectFilterDTO::fromArray($request->validated());
 
-        return $this->apiResponse(SubjectResource::collection($this->service->allByYear((int) $dto->year)));
+        return $this->respondResource(SubjectResource::collection($this->service->allByYear((int) $dto->year)));
     }
 }
