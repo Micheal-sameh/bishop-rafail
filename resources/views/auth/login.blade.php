@@ -3,8 +3,8 @@
 @section('title', 'تسجيل الدخول - مركز البابا شنوده')
 
 @section('content')
-    <h1 class="title">مركز البابا شنوده</h1>
-    <p class="subtitle">تسجيل الدخول إلى النظام الداخلي لمركز البابا شنوده.</p>
+    {{-- <h1 class="title">مركز البابا شنوده</h1>
+    <p class="subtitle">تسجيل الدخول إلى النظام الداخلي لمركز البابا شنوده.</p> --}}
 
     @if (session('status'))
         <div class="alert alert-ok">{{ session('status') }}</div>
@@ -16,6 +16,13 @@
 
     <form method="POST" action="{{ route('login.store') }}">
         @csrf
+
+        <div class="login-brand">
+        <img src="{{ asset('storage/default.jpg') }}"
+            alt="شعار المركز"
+            class="login-logo">
+        <p class="login-brand-text">مركز البابا شنودة للتاريخ الكنسي بكنائس وسط القاهرة</p>
+        </div>
 
         <div class="field">
             <label for="login">البريد الإلكتروني أو رقم الهاتف</label>

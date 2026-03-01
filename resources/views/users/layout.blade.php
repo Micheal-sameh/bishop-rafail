@@ -333,7 +333,7 @@
         <div class="page">
             <aside id="app-sidebar" class="sidebar">
                 <div class="sidebar-head">
-                    <h2 class="brand">مركز البابا شنوده</h2>
+                    <h2 class="brand">مركز البابا شنودة للتاريخ الكنسي بكنائس وسط القاهرة</h2>
                     <button id="sidebar-close" class="sidebar-close" type="button" aria-label="إغلاق القائمة">✕</button>
                 </div>
 
