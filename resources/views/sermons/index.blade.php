@@ -57,7 +57,5 @@
         </table>
     </div>
 
-    <div class="pagination">
-        {{ $sermons->links() }}
-    </div>
+    @include('partials.pagination', ['paginator' => $sermons])
 @endsection
