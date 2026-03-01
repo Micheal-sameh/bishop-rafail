@@ -15,6 +15,6 @@ class FilmController extends BaseController
 
     public function index(): JsonResponse
     {
-        return $this->apiResponse(FilmResource::collection($this->service->all()));
+        return $this->respondResource(FilmResource::collection($this->service->all()));
     }
 }

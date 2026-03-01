@@ -19,6 +19,6 @@ class LectureController extends BaseController
     {
         $dto = LectureFilterDTO::fromArray($request->validated());
 
-        return $this->apiResponse(LectureResource::collection($this->service->allBySubject((int) $dto->subject_id)));
+        return $this->respondResource(LectureResource::collection($this->service->allBySubject((int) $dto->subject_id)));
     }
 }

@@ -15,6 +15,6 @@ class GalleryController extends BaseController
 
     public function index(): JsonResponse
     {
-        return $this->apiResponse(GalleryResource::collection($this->service->all()));
+        return $this->respondResource(GalleryResource::collection($this->service->all()));
     }
 }
