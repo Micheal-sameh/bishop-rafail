@@ -41,4 +41,5 @@ Route::prefix('v1')->group(function (): void {
     Route::get('/subjects', [SubjectController::class, 'index']);
     Route::get('/lectures', [LectureController::class, 'index']);
     route::get('/settings/enums', [SettingsController::class, 'enums']);
+    route::get('/settings/about_us', [SettingsController::class, 'aboutUs']);
 });

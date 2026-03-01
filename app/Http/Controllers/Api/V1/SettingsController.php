@@ -18,4 +18,11 @@ class SettingsController extends BaseController
 
         return $this->apiResponse($enums);
     }
+
+    public function aboutUs(): JsonResponse
+    {
+        $aboutUs = $this->repository->aboutUsShow();
+
+        return $this->apiResponse($aboutUs);
+    }
 }
