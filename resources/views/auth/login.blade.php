@@ -39,6 +39,8 @@
                 <input id="remember" type="checkbox" name="remember" value="1">
                 تذكرني
             </label>
+
+            <a class="btn-link" href="{{ route('password.forgot') }}">نسيت كلمة المرور؟</a>
         </div>
 
         <button class="btn" type="submit">دخول المركز</button>

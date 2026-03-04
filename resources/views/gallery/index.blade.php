@@ -14,6 +14,7 @@
                 <tr>
                     <th>#</th>
                     <th>الصورة</th>
+                    <th>أُضيف بواسطة</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
@@ -26,6 +27,7 @@
                                 <img src="{{ $item->getFirstMediaUrl('gallery') }}" alt="gallery" style="height:72px;border-radius:8px;">
                             </a>
                         </td>
+                        <td>{{ $item->creator?->name ?? '—' }}</td>
                         <td>
                             <div class="actions">
                                 <a class="btn-link btn-light" href="{{ route('gallery.show', $item) }}">عرض</a>
@@ -35,7 +37,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3" class="meta">لا توجد صور حالياً.</td>
+                        <td colspan="4" class="meta">لا توجد صور حالياً.</td>
                     </tr>
                 @endforelse
             </tbody>

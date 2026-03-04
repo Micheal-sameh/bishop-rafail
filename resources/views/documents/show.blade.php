@@ -30,6 +30,10 @@
                     @endif
                 </td>
             </tr>
+            <tr>
+                <th>أُضيف بواسطة</th>
+                <td>{{ $document->creator?->name ?? '—' }}</td>
+            </tr>
         </tbody>
     </table>
 

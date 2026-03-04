@@ -13,9 +13,15 @@ class ProfileUpdateRequest extends FormRequest
 
     public function rules(): array
     {
+        $passwordRules = ['nullable', 'string', 'min:6', 'confirmed'];
+
+        if ($this->user()?->must_change_password) {
+            $passwordRules[0] = 'required';
+        }
+
         return [
             'name' => ['required', 'string', 'max:255'],
-            'password' => ['nullable', 'string', 'min:6', 'confirmed'],
+            'password' => $passwordRules,
         ];
     }
 

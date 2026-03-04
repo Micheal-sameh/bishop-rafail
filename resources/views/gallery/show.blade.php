@@ -18,6 +18,10 @@
                     </a>
                 </td>
             </tr>
+            <tr>
+                <th>أُضيف بواسطة</th>
+                <td>{{ $item->creator?->name ?? '—' }}</td>
+            </tr>
         </tbody>
     </table>
 

@@ -26,6 +26,10 @@
                 <th>الحالة</th>
                 <td>{{ (int) $user->status === 2 ? 'مُفعّل' : 'غير مُفعّل' }}</td>
             </tr>
+            <tr>
+                <th>أُضيف بواسطة</th>
+                <td>{{ $user->creator?->name ?? '—' }}</td>
+            </tr>
         </tbody>
     </table>
 

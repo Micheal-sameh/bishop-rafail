@@ -414,6 +414,7 @@
                     <p class="menu-title">إدارة النظام</p>
                     <div class="menu">
                         <a class="{{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">المستخدمون</a>
+                        <a class="{{ request()->routeIs('audits.*') ? 'active' : '' }}" href="{{ route('audits.index') }}">سجل العمليات</a>
                     </div>
                 </div>
 

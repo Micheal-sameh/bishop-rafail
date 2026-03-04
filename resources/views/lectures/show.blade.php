@@ -30,6 +30,10 @@
                     @endif
                 </td>
             </tr>
+            <tr>
+                <th>أُضيف بواسطة</th>
+                <td>{{ $lecture->creator?->name ?? '—' }}</td>
+            </tr>
         </tbody>
     </table>
 

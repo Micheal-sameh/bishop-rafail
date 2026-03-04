@@ -13,7 +13,8 @@ class SubjectRepository
     public function paginate(int $perPage = 15): LengthAwarePaginator
     {
         return $this->model->query()
-            ->select(['id', 'title', 'year', 'created_at'])
+            ->select(['id', 'title', 'year', 'created_by', 'created_at'])
+            ->with('creator:id,name')
             ->latest('id')
             ->paginate($perPage);
     }
@@ -35,7 +36,8 @@ class SubjectRepository
     public function findOrFail(int $id): Subject
     {
         return $this->model->query()
-            ->select(['id', 'title', 'year', 'created_at', 'updated_at'])
+            ->select(['id', 'title', 'year', 'created_by', 'created_at', 'updated_at'])
+            ->with('creator:id,name')
             ->findOrFail($id);
     }
 

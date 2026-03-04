@@ -18,6 +18,10 @@
                 <th>السنة</th>
                 <td>{{ $subject->year }}</td>
             </tr>
+            <tr>
+                <th>أُضيف بواسطة</th>
+                <td>{{ $subject->creator?->name ?? '—' }}</td>
+            </tr>
         </tbody>
     </table>
 

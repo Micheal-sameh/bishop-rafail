@@ -13,8 +13,10 @@ class LectureRepository
     public function paginate(int $perPage = 15): LengthAwarePaginator
     {
         return $this->model->query()
-            ->select(['id', 'title', 'url', 'subject_id', 'created_at'])
+            ->select(['id', 'title', 'url', 'subject_id', 'created_by', 'created_at'])
+            ->with('creator:id,name')
             ->with('subject:id,title')
+            ->with('media')
             ->latest('id')
             ->paginate($perPage);
     }
@@ -25,6 +27,7 @@ class LectureRepository
             ->select(['id', 'title', 'url', 'subject_id'])
             ->with('subject:id,title')
             ->where('subject_id', $subjectId)
+            ->with('media')
             ->latest('id')
             ->get();
     }
@@ -37,7 +40,8 @@ class LectureRepository
     public function findOrFail(int $id): Lecture
     {
         return $this->model->query()
-            ->select(['id', 'title', 'url', 'subject_id', 'created_at', 'updated_at'])
+            ->select(['id', 'title', 'url', 'subject_id', 'created_by', 'created_at', 'updated_at'])
+            ->with('creator:id,name')
             ->with('subject:id,title')
             ->findOrFail($id);
     }

@@ -12,7 +12,10 @@ class FilmRepository
 
     public function paginate(int $perPage = 15): LengthAwarePaginator
     {
-        return $this->model->query()->latest('id')->paginate($perPage);
+        return $this->model->query()
+            ->with('creator:id,name')
+            ->latest('id')
+            ->paginate($perPage);
     }
 
     public function all(): Collection
@@ -27,7 +30,9 @@ class FilmRepository
 
     public function findOrFail(int $id): Film
     {
-        return $this->model->query()->findOrFail($id);
+        return $this->model->query()
+            ->with('creator:id,name')
+            ->findOrFail($id);
     }
 
     public function update(Film $film, array $data): Film

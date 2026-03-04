@@ -18,6 +18,10 @@
                 <th>الرابط</th>
                 <td><a class="btn-link btn-light" href="{{ $film->url }}" target="_blank">فتح</a></td>
             </tr>
+            <tr>
+                <th>أُضيف بواسطة</th>
+                <td>{{ $film->creator?->name ?? '—' }}</td>
+            </tr>
         </tbody>
     </table>
 
