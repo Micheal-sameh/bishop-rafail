@@ -13,7 +13,8 @@ class SermonRepository
     public function paginate(int $perPage = 15): LengthAwarePaginator
     {
         return $this->model->query()
-            ->select(['id', 'title', 'url', 'sermon_playlist_id', 'created_at'])
+            ->select(['id', 'title', 'url', 'sermon_playlist_id', 'created_by', 'created_at'])
+            ->with('creator:id,name')
             ->with('playlist:id,title,type')
             ->with('media')
             ->latest('id')
@@ -23,7 +24,8 @@ class SermonRepository
     public function paginateByPlaylistType(int $type, int $perPage = 15): LengthAwarePaginator
     {
         return $this->model->query()
-            ->select(['id', 'title', 'url', 'sermon_playlist_id', 'created_at'])
+            ->select(['id', 'title', 'url', 'sermon_playlist_id', 'created_by', 'created_at'])
+            ->with('creator:id,name')
             ->with('playlist:id,title,type')
             ->whereHas('playlist', function ($query) use ($type): void {
                 $query->where('type', $type);
@@ -50,7 +52,8 @@ class SermonRepository
     public function findOrFail(int $id): Sermon
     {
         return $this->model->query()
-            ->select(['id', 'title', 'url', 'sermon_playlist_id', 'created_at', 'updated_at'])
+            ->select(['id', 'title', 'url', 'sermon_playlist_id', 'created_by', 'created_at', 'updated_at'])
+            ->with('creator:id,name')
             ->with('playlist:id,title,type')
             ->findOrFail($id);
     }

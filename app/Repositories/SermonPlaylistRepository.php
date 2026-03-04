@@ -13,6 +13,7 @@ class SermonPlaylistRepository
     public function paginate(int $perPage = 15): LengthAwarePaginator
     {
         return $this->model->query()
+            ->with('creator:id,name')
             ->latest('id')
             ->paginate($perPage);
     }
@@ -35,7 +36,9 @@ class SermonPlaylistRepository
 
     public function findOrFail(int $id): SermonPlaylist
     {
-        return $this->model->query()->findOrFail($id);
+        return $this->model->query()
+            ->with('creator:id,name')
+            ->findOrFail($id);
     }
 
     public function update(SermonPlaylist $playlist, array $data): SermonPlaylist

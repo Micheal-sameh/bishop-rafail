@@ -23,6 +23,7 @@
                     <th>العنوان</th>
                     <th>القائمة</th>
                     <th>الرابط</th>
+                    <th>أُضيف بواسطة</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
@@ -40,6 +41,7 @@
                                 <a class="btn-link btn-light" href="{{ $sermon->getFirstMediaUrl('sermons') }}" target="_blank">فتح الرابط</a>
                             @endif
                         </td>
+                        <td>{{ $sermon->creator?->name ?? '—' }}</td>
                         <td>
                             <div class="actions">
                                 <a class="btn-link btn-light" href="{{ route('sermons.show', $sermon) }}">عرض</a>

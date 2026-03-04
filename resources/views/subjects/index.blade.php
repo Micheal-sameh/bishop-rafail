@@ -15,6 +15,7 @@
                     <th>#</th>
                     <th>العنوان</th>
                     <th>السنة</th>
+                    <th>أُضيف بواسطة</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
@@ -24,6 +25,7 @@
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $subject->title }}</td>
                         <td>{{ $subject->year }}</td>
+                        <td>{{ $subject->creator?->name ?? '—' }}</td>
                         <td>
                             <div class="actions">
                                 <a class="btn-link btn-light" href="{{ route('subjects.show', $subject) }}">عرض</a>
@@ -34,7 +36,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="meta">لا توجد مواد حالياً.</td>
+                        <td colspan="5" class="meta">لا توجد مواد حالياً.</td>
                     </tr>
                 @endforelse
             </tbody>

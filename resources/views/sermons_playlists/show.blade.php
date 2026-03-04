@@ -18,6 +18,10 @@
                 <th>النوع</th>
                 <td>{{ $typeLabel((int) $playlist->type) }}</td>
             </tr>
+            <tr>
+                <th>أُضيف بواسطة</th>
+                <td>{{ $playlist->creator?->name ?? '—' }}</td>
+            </tr>
         </tbody>
     </table>
 

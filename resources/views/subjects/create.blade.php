@@ -14,7 +14,14 @@
 
         <div class="field">
             <label for="year">السنة</label>
-            <input id="year" type="number" name="year" value="{{ old('year') }}" min="1900" max="2100" required>
+            @php
+                $selectedYear = (int) old('year', now()->year);
+            @endphp
+            <select id="year" name="year" required>
+                @for ($year = now()->year; $year >= 2000; $year--)
+                    <option value="{{ $year }}" @selected($selectedYear === $year)>{{ $year }}</option>
+                @endfor
+            </select>
         </div>
 
         <div class="actions">

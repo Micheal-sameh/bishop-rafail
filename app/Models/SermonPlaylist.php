@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasCreatedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SermonPlaylist extends Model
 {
+    use HasCreatedBy;
     use HasFactory;
 
     protected $table = 'sermons_playlists';
@@ -15,6 +17,7 @@ class SermonPlaylist extends Model
     protected $fillable = [
         'title',
         'type',
+        'created_by',
     ];
 
     public function sermons(): HasMany

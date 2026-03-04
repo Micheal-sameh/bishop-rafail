@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuditController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\GalleryController;
@@ -29,9 +30,13 @@ Route::get('/', function () {
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.forgot');
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 
-Route::middleware('auth')->group(function (): void {
+Route::middleware(['auth', 'force.password.change'])->group(function (): void {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
@@ -47,6 +52,11 @@ Route::middleware('auth')->group(function (): void {
         Route::get('/{user}/delete', [UserController::class, 'delete'])->name('delete');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
         Route::post('/{user}/reset-password', [UserController::class, 'resetPassword'])->name('reset-password');
+    });
+
+    Route::prefix('audits')->name('audits.')->group(function (): void {
+        Route::get('/', [AuditController::class, 'index'])->name('index');
+        Route::get('/{audit}', [AuditController::class, 'show'])->name('show');
     });
 
     Route::prefix('sermons-playlists')->name('sermons-playlists.')->group(function (): void {

@@ -29,6 +29,7 @@ class UserService
     public function createUser(array $data): User
     {
         $data['password'] = Hash::make($this->defaultPassword());
+        $data['must_change_password'] = true;
 
         return $this->userRepository->create($data);
     }
@@ -44,6 +45,7 @@ class UserService
 
         $this->userRepository->update($user, [
             'password' => Hash::make($password),
+            'must_change_password' => true,
         ]);
 
         return $password;
@@ -67,6 +69,7 @@ class UserService
 
         if (! empty($data['password'])) {
             $payload['password'] = Hash::make((string) $data['password']);
+            $payload['must_change_password'] = false;
         }
 
         return $this->userRepository->update($user, $payload);

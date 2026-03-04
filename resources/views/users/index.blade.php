@@ -17,6 +17,7 @@
                     <th>الهاتف</th>
                     <th>البريد الإلكتروني</th>
                     <th>الحالة</th>
+                    <th>أُضيف بواسطة</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
@@ -28,6 +29,7 @@
                         <td>{{ $user->phone }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ (int) $user->status === 2 ? 'مُفعّل' : 'غير مُفعّل' }}</td>
+                        <td>{{ $user->creator?->name ?? '—' }}</td>
                         <td>
                             <div class="actions">
                                 <a class="btn-link btn-light" href="{{ route('users.show', $user) }}">عرض</a>
@@ -38,7 +40,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="meta">لا يوجد مستخدمون حالياً.</td>
+                        <td colspan="7" class="meta">لا يوجد مستخدمون حالياً.</td>
                     </tr>
                 @endforelse
             </tbody>

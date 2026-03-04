@@ -24,6 +24,7 @@
                     <th>العنوان</th>
                     <th>النوع</th>
                     <th>الرابط</th>
+                    <th>أُضيف بواسطة</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
@@ -41,6 +42,7 @@
                                 <span class="meta">—</span>
                             @endif
                         </td>
+                        <td>{{ $document->creator?->name ?? '—' }}</td>
                         <td>
                             <div class="actions">
                                 <a class="btn-link btn-light" href="{{ route('documents.show', $document) }}">عرض</a>
@@ -51,7 +53,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="meta">لا توجد مستندات حالياً.</td>
+                        <td colspan="6" class="meta">لا توجد مستندات حالياً.</td>
                     </tr>
                 @endforelse
             </tbody>

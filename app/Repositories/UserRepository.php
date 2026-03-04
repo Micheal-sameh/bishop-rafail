@@ -12,6 +12,7 @@ class UserRepository
     public function paginate(int $perPage = 15): LengthAwarePaginator
     {
         return $this->model->query()
+            ->with('creator:id,name')
             ->latest('id')
             ->paginate($perPage);
     }
@@ -23,7 +24,9 @@ class UserRepository
 
     public function findOrFail(int $id): User
     {
-        return $this->model->query()->findOrFail($id);
+        return $this->model->query()
+            ->with('creator:id,name')
+            ->findOrFail($id);
     }
 
     public function update(User $user, array $data): User

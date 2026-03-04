@@ -16,6 +16,7 @@
                     <th>العنوان</th>
                     <th>المادة</th>
                     <th>الرابط / الوسائط</th>
+                    <th>أُضيف بواسطة</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
@@ -33,6 +34,7 @@
                                 <span class="meta">—</span>
                             @endif
                         </td>
+                        <td>{{ $lecture->creator?->name ?? '—' }}</td>
                         <td>
                             <div class="actions">
                                 <a class="btn-link btn-light" href="{{ route('lectures.show', $lecture) }}">عرض</a>
@@ -43,7 +45,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="meta">لا توجد محاضرات حالياً.</td>
+                        <td colspan="6" class="meta">لا توجد محاضرات حالياً.</td>
                     </tr>
                 @endforelse
             </tbody>

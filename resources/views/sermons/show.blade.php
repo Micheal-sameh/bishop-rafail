@@ -40,6 +40,10 @@
                     @endif
                 </td>
             </tr>
+            <tr>
+                <th>أُضيف بواسطة</th>
+                <td>{{ $sermon->creator?->name ?? '—' }}</td>
+            </tr>
         </tbody>
     </table>
 

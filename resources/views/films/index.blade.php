@@ -15,6 +15,7 @@
                     <th>#</th>
                     <th>العنوان</th>
                     <th>الرابط</th>
+                    <th>أُضيف بواسطة</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
@@ -24,6 +25,7 @@
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $film->title }}</td>
                         <td><a class="btn-link btn-light" href="{{ $film->url }}" target="_blank">فتح</a></td>
+                        <td>{{ $film->creator?->name ?? '—' }}</td>
                         <td>
                             <div class="actions">
                                 <a class="btn-link btn-light" href="{{ route('films.show', $film) }}">عرض</a>
@@ -34,7 +36,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="meta">لا توجد أفلام حالياً.</td>
+                        <td colspan="5" class="meta">لا توجد أفلام حالياً.</td>
                     </tr>
                 @endforelse
             </tbody>
