@@ -17,7 +17,7 @@ class GalleryRepository
 
     public function all(): Collection
     {
-        return $this->model->query()->latest('id')->get();
+        return $this->model->query()->with('media')->latest('id')->get();
     }
 
     public function create(array $data = []): Gallery

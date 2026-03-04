@@ -15,6 +15,7 @@ class SermonRepository
         return $this->model->query()
             ->select(['id', 'title', 'url', 'sermon_playlist_id', 'created_at'])
             ->with('playlist:id,title,type')
+            ->with('media')
             ->latest('id')
             ->paginate($perPage);
     }

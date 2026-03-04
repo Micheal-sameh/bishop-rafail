@@ -15,6 +15,7 @@ class LectureRepository
         return $this->model->query()
             ->select(['id', 'title', 'url', 'subject_id', 'created_at'])
             ->with('subject:id,title')
+            ->with('media')
             ->latest('id')
             ->paginate($perPage);
     }
@@ -25,6 +26,7 @@ class LectureRepository
             ->select(['id', 'title', 'url', 'subject_id'])
             ->with('subject:id,title')
             ->where('subject_id', $subjectId)
+            ->with('media')
             ->latest('id')
             ->get();
     }

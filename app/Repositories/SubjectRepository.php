@@ -14,6 +14,7 @@ class SubjectRepository
     {
         return $this->model->query()
             ->select(['id', 'title', 'year', 'created_at'])
+            ->with('media')
             ->latest('id')
             ->paginate($perPage);
     }

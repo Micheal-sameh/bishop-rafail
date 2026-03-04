@@ -32,6 +32,7 @@ class DocumentRepository
         return $this->model->query()
             ->select(['id', 'title', 'url', 'type'])
             ->where('type', $type)
+            ->with('media')
             ->latest('id')
             ->get();
     }
